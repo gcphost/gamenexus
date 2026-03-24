@@ -1,7 +1,9 @@
 "use client";
 
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { HiArrowRight, HiPlay } from "react-icons/hi";
+import { fadeUp, scaleUp } from "./motion";
 
 export default function HeroSection() {
     return (
@@ -26,29 +28,53 @@ export default function HeroSection() {
             {/* Content */}
             <div className="relative z-10 max-w-7xl mx-auto px-6 pt-32 pb-20 text-center">
                 {/* Badge */}
-                <div className="reveal inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#38bdf8]/10 border border-[#38bdf8]/20 text-[#38bdf8] text-sm font-medium mb-8">
+                <motion.div
+                    variants={fadeUp}
+                    initial="hidden"
+                    animate="visible"
+                    custom={0}
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#38bdf8]/10 border border-[#38bdf8]/20 text-[#38bdf8] text-sm font-medium mb-8"
+                >
                     <span className="w-2 h-2 rounded-full bg-[#22c55e] animate-pulse" />
                     Powered by GameCP
-                </div>
+                </motion.div>
 
                 {/* Heading */}
-                <h1 className="reveal reveal-delay-1 text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight leading-[0.95] mb-6">
+                <motion.h1
+                    variants={fadeUp}
+                    initial="hidden"
+                    animate="visible"
+                    custom={1}
+                    className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight leading-[0.95] mb-6"
+                >
                     Your Games.
                     <br />
                     <span className="gradient-text">Your Servers.</span>
                     <br />
                     Your Rules.
-                </h1>
+                </motion.h1>
 
                 {/* Subtitle */}
-                <p className="reveal reveal-delay-2 text-lg sm:text-xl text-[#999999] max-w-2xl mx-auto mb-10 leading-relaxed">
-                    Deploy game servers and applications in under 60 seconds.
-                    Full control, zero hassle. From Minecraft to custom apps —
-                    we power it all.
-                </p>
+                <motion.p
+                    variants={fadeUp}
+                    initial="hidden"
+                    animate="visible"
+                    custom={2}
+                    className="text-lg sm:text-xl text-[#999999] max-w-2xl mx-auto mb-10 leading-relaxed"
+                >
+                    Game server hosting on infrastructure we run, with GameCP behind
+                    the scenes—50+ built-in templates, Docker isolation, live console,
+                    and mod tooling (CurseForge, Modrinth, Steam Workshop).
+                </motion.p>
 
                 {/* CTA Buttons */}
-                <div className="reveal reveal-delay-3 flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+                <motion.div
+                    variants={fadeUp}
+                    initial="hidden"
+                    animate="visible"
+                    custom={3}
+                    className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
+                >
                     <a
                         href="#"
                         className="btn-glow px-8 py-4 text-base rounded-2xl flex items-center gap-2 group"
@@ -63,31 +89,43 @@ export default function HeroSection() {
                         <HiPlay className="text-[#38bdf8]" />
                         Watch Demo
                     </a>
-                </div>
+                </motion.div>
 
                 {/* Dashboard preview */}
-                <div className="reveal reveal-delay-4 relative max-w-5xl mx-auto">
+                <motion.div
+                    variants={scaleUp}
+                    initial="hidden"
+                    animate="visible"
+                    custom={4}
+                    className="relative max-w-5xl mx-auto"
+                >
                     <div className="absolute -inset-4 bg-gradient-to-r from-[#38bdf8]/20 via-[#a855f7]/20 to-[#ec4899]/20 rounded-3xl blur-2xl opacity-50" />
                     <div className="relative rounded-2xl overflow-hidden border border-[#4d4d4d] shadow-2xl">
                         <Image
                             src="/images/dashboard-preview.png"
                             alt="Game Nexus Dashboard"
-                            width={1200}
-                            height={675}
+                            width={1725}
+                            height={916}
                             className="w-full h-auto"
                             priority
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a] via-transparent to-transparent opacity-40" />
                     </div>
-                </div>
+                </motion.div>
 
                 {/* Stats row */}
-                <div className="reveal reveal-delay-5 grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 max-w-4xl mx-auto">
+                <motion.div
+                    variants={fadeUp}
+                    initial="hidden"
+                    animate="visible"
+                    custom={5}
+                    className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 max-w-4xl mx-auto"
+                >
                     {[
-                        { value: "99.9%", label: "Uptime SLA" },
+                        { value: "50+", label: "Games Supported" },
                         { value: "< 50ms", label: "Avg Latency" },
-                        { value: "200+", label: "Games Supported" },
-                        { value: "24/7", label: "Expert Support" },
+                        { value: "Docker", label: "Isolated Servers" },
+                        { value: "Live", label: "Web Console" },
                     ].map((stat) => (
                         <div key={stat.label} className="text-center">
                             <div className="text-3xl sm:text-4xl font-bold gradient-text mb-1">
@@ -98,7 +136,7 @@ export default function HeroSection() {
                             </div>
                         </div>
                     ))}
-                </div>
+                </motion.div>
             </div>
 
             {/* Scroll indicator */}

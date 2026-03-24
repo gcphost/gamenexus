@@ -20,6 +20,7 @@ export const metadata: Metadata = {
     "game panel",
     "GameCP",
     "cloud gaming",
+    "cloud gaming",
     "dedicated servers",
   ],
   openGraph: {

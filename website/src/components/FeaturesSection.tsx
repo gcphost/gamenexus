@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import {
     HiOutlineLightningBolt,
     HiOutlineShieldCheck,
@@ -9,20 +8,21 @@ import {
     HiOutlineGlobe,
     HiOutlineCube,
 } from "react-icons/hi";
+import { StaggerGroup, StaggerItem, FadeUp } from "./motion";
 
 const features = [
     {
         icon: HiOutlineLightningBolt,
         title: "Instant Deploy",
         description:
-            "One-click server deployment with pre-configured templates. Get your game server or app running in under 60 seconds.",
+            "Spin up from 50+ GameCP game templates—one-click installs and sensible defaults so you spend time playing, not tweaking config.",
         color: "#38bdf8",
     },
     {
         icon: HiOutlineShieldCheck,
-        title: "DDoS Protection",
+        title: "Docker Isolation",
         description:
-            "Enterprise-grade DDoS mitigation on every server. Play without interruption, no matter the attack vector.",
+            "Every game server runs in its own container with dedicated resources. No noisy neighbors, predictable performance.",
         color: "#22c55e",
     },
     {
@@ -41,74 +41,54 @@ const features = [
     },
     {
         icon: HiOutlineGlobe,
-        title: "Global Locations",
+        title: "Pick your region",
         description:
-            "Data centers across North America, Europe, and Asia-Pacific. Low-latency connections for players worldwide.",
+            "Choose a location that matches your players. Availability depends on our current datacenter footprint—ask sales if you need a specific metro.",
         color: "#ec4899",
     },
     {
         icon: HiOutlineCube,
         title: "App Marketplace",
         description:
-            "Deploy databases, CRMs, websites, and more from our curated marketplace. Not just games — anything you need.",
+            "Extend your panel with community-built extensions and integrations from the GameCP App Store.",
         color: "#38bdf8",
     },
 ];
 
-const delayClasses = [
-    "reveal-delay-1",
-    "reveal-delay-2",
-    "reveal-delay-3",
-    "reveal-delay-4",
-    "reveal-delay-5",
-    "reveal-delay-6",
-];
-
 export default function FeaturesSection() {
-    const sectionRef = useRef<HTMLDivElement>(null);
-    const [visible, setVisible] = useState(false);
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) setVisible(true);
-            },
-            { threshold: 0.15 }
-        );
-        if (sectionRef.current) observer.observe(sectionRef.current);
-        return () => observer.disconnect();
-    }, []);
-
     return (
-        <section id="features" ref={sectionRef} className="relative py-32 overflow-hidden">
+        <section id="features" className="relative py-32 overflow-hidden">
             <div className="orb orb-purple w-[400px] h-[400px] top-20 -right-20 opacity-10" />
             <div className="orb orb-cyan w-[300px] h-[300px] bottom-20 -left-20 opacity-10" />
 
             <div className="relative z-10 max-w-7xl mx-auto px-6">
                 {/* Section header */}
                 <div className="text-center mb-20">
-                    <span className="inline-block text-[#38bdf8] text-sm font-semibold tracking-widest uppercase mb-4">
-                        Why Game Nexus
-                    </span>
-                    <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-6">
-                        Built for <span className="gradient-text">Performance</span>
-                    </h2>
-                    <p className="text-[#999999] text-lg max-w-2xl mx-auto">
-                        Everything you need to host, manage, and scale your game servers
-                        and applications — all from one powerful platform.
-                    </p>
+                    <FadeUp>
+                        <span className="inline-block text-[#38bdf8] text-sm font-semibold tracking-widest uppercase mb-4">
+                            Why Game Nexus
+                        </span>
+                    </FadeUp>
+                    <FadeUp delay={1}>
+                        <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-6">
+                            Built for <span className="gradient-text">Performance</span>
+                        </h2>
+                    </FadeUp>
+                    <FadeUp delay={2}>
+                        <p className="text-[#999999] text-lg max-w-2xl mx-auto">
+                            Hosting plus the real GameCP feature set: templates, Docker,
+                            mods, backups, monitoring hooks, API access on qualifying plans,
+                            and optional WHMCS-style tooling where we enable it.
+                        </p>
+                    </FadeUp>
                 </div>
 
                 {/* Feature grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {features.map((feature, i) => {
+                <StaggerGroup className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {features.map((feature) => {
                         const Icon = feature.icon;
                         return (
-                            <div
-                                key={feature.title}
-                                className={`feature-card ${visible ? `reveal ${delayClasses[i]}` : "opacity-0"
-                                    }`}
-                            >
+                            <StaggerItem key={feature.title} className="feature-card">
                                 <div
                                     className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5"
                                     style={{
@@ -124,10 +104,10 @@ export default function FeaturesSection() {
                                 <p className="text-[#999999] leading-relaxed text-[15px]">
                                     {feature.description}
                                 </p>
-                            </div>
+                            </StaggerItem>
                         );
                     })}
-                </div>
+                </StaggerGroup>
             </div>
         </section>
     );

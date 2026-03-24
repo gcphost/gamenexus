@@ -1,122 +1,96 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import {
-    RiGamepadFill,
-    RiSwordFill,
-    RiSpaceShipFill,
-    RiSettings3Fill,
-    RiStackFill,
-} from "react-icons/ri";
-import {
-    TbCube,
-    TbFlame,
-    TbTarget,
-} from "react-icons/tb";
+import { RiStackFill } from "react-icons/ri";
+import { StaggerGroup, StaggerItem, FadeUp } from "./motion";
+
+const CDN = "https://images.gamecp.com/images";
 
 const games = [
-    { name: "Minecraft", icon: TbCube, players: "238M+", color: "#22c55e" },
-    { name: "Rust", icon: TbFlame, players: "14M+", color: "#f97316" },
-    { name: "Counter-Strike 2", icon: TbTarget, players: "45M+", color: "#38bdf8" },
-    { name: "Palworld", icon: RiGamepadFill, players: "25M+", color: "#a855f7" },
-    { name: "Valheim", icon: RiSwordFill, players: "12M+", color: "#ec4899" },
-    { name: "Space Engineers", icon: RiSpaceShipFill, players: "5M+", color: "#06b6d4" },
-    { name: "Satisfactory", icon: RiSettings3Fill, players: "8M+", color: "#eab308" },
-    { name: "200+ More", icon: RiStackFill, players: "& counting", color: "#64748b" },
-];
-
-const delayClasses = [
-    "reveal-delay-1",
-    "reveal-delay-2",
-    "reveal-delay-3",
-    "reveal-delay-4",
-    "reveal-delay-5",
-    "reveal-delay-6",
-    "reveal-delay-6",
-    "reveal-delay-6",
+    { name: "Minecraft", gameGroup: "minecraft", players: "238M+", color: "#22c55e" },
+    { name: "Rust", gameGroup: "rust", players: "14M+", color: "#f97316" },
+    { name: "Counter-Strike 2", gameGroup: "cs2", players: "45M+", color: "#38bdf8" },
+    { name: "Palworld", gameGroup: "palworld", players: "25M+", color: "#a855f7" },
+    { name: "Valheim", gameGroup: "valheim", players: "12M+", color: "#ec4899" },
+    { name: "Space Engineers", gameGroup: "spaceengineers", players: "5M+", color: "#06b6d4" },
+    { name: "Satisfactory", gameGroup: "satisfactory", players: "8M+", color: "#eab308" },
+    { name: "50+ More", gameGroup: null, players: "& counting", color: "#64748b" },
 ];
 
 export default function GamesSection() {
-    const sectionRef = useRef<HTMLDivElement>(null);
-    const [visible, setVisible] = useState(false);
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) setVisible(true);
-            },
-            { threshold: 0.1 }
-        );
-        if (sectionRef.current) observer.observe(sectionRef.current);
-        return () => observer.disconnect();
-    }, []);
-
     return (
-        <section id="games" ref={sectionRef} className="relative py-32 overflow-hidden">
+        <section id="games" className="relative py-32 overflow-hidden">
             <div className="orb orb-cyan w-[500px] h-[500px] top-0 left-1/4 opacity-10" />
 
             <div className="relative z-10 max-w-7xl mx-auto px-6">
                 {/* Section header */}
                 <div className="text-center mb-16">
-                    <span className="inline-block text-[#a855f7] text-sm font-semibold tracking-widest uppercase mb-4">
-                        Game Library
-                    </span>
-                    <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-6">
-                        Your Favorite <span className="gradient-text">Games</span>
-                    </h2>
-                    <p className="text-[#999999] text-lg max-w-2xl mx-auto">
-                        Instantly deploy servers for the world&apos;s most popular games. Pre-configured
-                        templates with mod support, auto-updates, and one-click installs.
-                    </p>
+                    <FadeUp>
+                        <span className="inline-block text-[#a855f7] text-sm font-semibold tracking-widest uppercase mb-4">
+                            Game Library
+                        </span>
+                    </FadeUp>
+                    <FadeUp delay={1}>
+                        <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-6">
+                            Your Favorite <span className="gradient-text">Games</span>
+                        </h2>
+                    </FadeUp>
+                    <FadeUp delay={2}>
+                        <p className="text-[#999999] text-lg max-w-2xl mx-auto">
+                            Deploy servers for major titles from GameCP&apos;s built-in library—50+
+                            templates with mod sources, updates, and one-click installs where the
+                            game supports it.
+                        </p>
+                    </FadeUp>
                 </div>
 
                 {/* Games grid */}
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5">
-                    {games.map((game, i) => {
-                        const Icon = game.icon;
-                        return (
+                <StaggerGroup className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5">
+                    {games.map((game) => (
+                        <StaggerItem
+                            key={game.name}
+                            className="group relative bg-[#2e2e2e] border border-[#4d4d4d] rounded-2xl p-6 cursor-pointer transition-all duration-300 hover:-translate-y-2"
+                        >
+                            {/* Glow top bar on hover */}
                             <div
-                                key={game.name}
-                                className={`group relative bg-[#2e2e2e] border border-[#4d4d4d] rounded-2xl p-6 cursor-pointer transition-all duration-300 hover:-translate-y-2 ${visible ? `reveal ${delayClasses[i]}` : "opacity-0"
-                                    }`}
+                                className="absolute top-0 left-0 right-0 h-[2px] rounded-t-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                                 style={{
-                                    ["--card-color" as string]: game.color,
+                                    background: `linear-gradient(90deg, transparent, ${game.color}, transparent)`,
                                 }}
-                            >
-                                {/* Glow top bar on hover */}
-                                <div
-                                    className="absolute top-0 left-0 right-0 h-[2px] rounded-t-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                                    style={{
-                                        background: `linear-gradient(90deg, transparent, ${game.color}, transparent)`,
-                                    }}
-                                />
+                            />
 
-                                <div className="flex flex-col items-center text-center gap-4">
-                                    <div
-                                        className="w-16 h-16 rounded-2xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
-                                        style={{
-                                            background: `${game.color}15`,
-                                            border: `1px solid ${game.color}25`,
-                                        }}
-                                    >
-                                        <Icon className="text-3xl" style={{ color: game.color }} />
-                                    </div>
-                                    <div>
-                                        <h3 className="font-bold text-[#dedede] mb-1">
-                                            {game.name}
-                                        </h3>
-                                        <p className="text-sm text-[#666666]">
-                                            {game.players} players
-                                        </p>
-                                    </div>
+                            <div className="flex flex-col items-center text-center gap-4">
+                                <div
+                                    className="w-16 h-16 rounded-2xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110 overflow-hidden"
+                                    style={{
+                                        background: `${game.color}15`,
+                                        border: `1px solid ${game.color}25`,
+                                    }}
+                                >
+                                    {game.gameGroup ? (
+                                        <img
+                                            src={`${CDN}/${game.gameGroup}/icon.webp`}
+                                            alt={game.name}
+                                            className="w-10 h-10 object-contain"
+                                        />
+                                    ) : (
+                                        <RiStackFill className="text-3xl" style={{ color: game.color }} />
+                                    )}
+                                </div>
+                                <div>
+                                    <h3 className="font-bold text-[#dedede] mb-1">
+                                        {game.name}
+                                    </h3>
+                                    <p className="text-sm text-[#666666]">
+                                        {game.players} players
+                                    </p>
                                 </div>
                             </div>
-                        );
-                    })}
-                </div>
+                        </StaggerItem>
+                    ))}
+                </StaggerGroup>
 
                 {/* Browse all CTA */}
-                <div className="text-center mt-12">
+                <FadeUp delay={3} className="text-center mt-12">
                     <a
                         href="#"
                         className="inline-flex items-center gap-2 text-[#38bdf8] font-medium transition-colors group"
@@ -126,7 +100,7 @@ export default function GamesSection() {
                             &rarr;
                         </span>
                     </a>
-                </div>
+                </FadeUp>
             </div>
         </section>
     );

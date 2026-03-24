@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import { HiStar } from "react-icons/hi";
+import { StaggerGroup, StaggerItem, FadeUp } from "./motion";
 
 const testimonials = [
     {
@@ -9,7 +9,7 @@ const testimonials = [
         role: "Rust Community Owner",
         avatar: "A",
         content:
-            "Switched from another host and the difference is night and day. Our Rust server handles 300 players with zero lag. The control panel is beautiful.",
+            "Switched from another host and the Rust template in GameCP just worked—console in the browser, Docker isolation, and fewer random restarts for us.",
         stars: 5,
         color: "#f97316",
     },
@@ -18,7 +18,7 @@ const testimonials = [
         role: "Minecraft Network Admin",
         avatar: "S",
         content:
-            "Managing 12 Minecraft servers from one dashboard is a dream. The auto-backup system has saved us multiple times. Best hosting decision we've made.",
+            "Managing multiple Minecraft instances from one GameCP dashboard is what sold us. Backups and file manager beat bouncing between SSH sessions.",
         stars: 5,
         color: "#22c55e",
     },
@@ -27,7 +27,7 @@ const testimonials = [
         role: "CS2 Tournament Organizer",
         avatar: "M",
         content:
-            "We run monthly CS2 tournaments and need rock-solid reliability. Game Nexus delivers 99.99% uptime and the DDoS protection actually works.",
+            "We run monthly CS2 tournaments and need rock-solid reliability. Game Nexus has been consistently stable for us and support is responsive.",
         stars: 5,
         color: "#a855f7",
     },
@@ -36,7 +36,7 @@ const testimonials = [
         role: "Indie Game Developer",
         avatar: "E",
         content:
-            "I use the app marketplace to host my game's backend, database, and website all from one platform. The API access is incredible for automation.",
+            "The GameCP API on our plan lets us script server lifecycle. The App Store is panel extensions—not magic Heroku for random databases, and that honesty matters.",
         stars: 5,
         color: "#38bdf8",
     },
@@ -45,7 +45,7 @@ const testimonials = [
         role: "Palworld Server Host",
         avatar: "J",
         content:
-            "Set up a Palworld dedicated server in literally 30 seconds. The one-click mod installer is clutch. Support team responds in minutes, not hours.",
+            "Palworld came up fast from a template; mod tooling hooks into the sources GameCP supports. Support SLA depends on your tier, but we've had quick replies.",
         stars: 5,
         color: "#ec4899",
     },
@@ -54,62 +54,44 @@ const testimonials = [
         role: "Hosting Reseller",
         avatar: "T",
         content:
-            "The white-label features let me run my own hosting brand on Game Nexus infrastructure. My clients love the panel and I love the margins.",
+            "White-label and WHMCS-style workflows are a GameCP tier thing—we resell Game Nexus plus that stack where our contract allows. Clients see a modern panel.",
         stars: 5,
         color: "#06b6d4",
     },
 ];
 
-const delayClasses = [
-    "reveal-delay-1",
-    "reveal-delay-2",
-    "reveal-delay-3",
-    "reveal-delay-4",
-    "reveal-delay-5",
-    "reveal-delay-6",
-];
-
 export default function TestimonialsSection() {
-    const sectionRef = useRef<HTMLDivElement>(null);
-    const [visible, setVisible] = useState(false);
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) setVisible(true);
-            },
-            { threshold: 0.1 }
-        );
-        if (sectionRef.current) observer.observe(sectionRef.current);
-        return () => observer.disconnect();
-    }, []);
-
     return (
-        <section ref={sectionRef} className="relative py-32 overflow-hidden">
+        <section className="relative py-32 overflow-hidden">
             <div className="orb orb-pink w-[400px] h-[400px] top-20 left-1/4 opacity-10" />
 
             <div className="relative z-10 max-w-7xl mx-auto px-6">
                 {/* Section header */}
                 <div className="text-center mb-16">
-                    <span className="inline-block text-[#ec4899] text-sm font-semibold tracking-widest uppercase mb-4">
-                        Testimonials
-                    </span>
-                    <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-6">
-                        Loved by <span className="gradient-text">Gamers</span>
-                    </h2>
-                    <p className="text-[#999999] text-lg max-w-2xl mx-auto">
-                        Join thousands of satisfied gamers, communities, and developers who
-                        trust Game Nexus for their hosting needs.
-                    </p>
+                    <FadeUp>
+                        <span className="inline-block text-[#ec4899] text-sm font-semibold tracking-widest uppercase mb-4">
+                            Testimonials
+                        </span>
+                    </FadeUp>
+                    <FadeUp delay={1}>
+                        <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-6">
+                            Loved by <span className="gradient-text">Gamers</span>
+                        </h2>
+                    </FadeUp>
+                    <FadeUp delay={2}>
+                        <p className="text-[#999999] text-lg max-w-2xl mx-auto">
+                            Illustrative feedback from the kind of crews that run GameCP day to
+                            day—your mileage still depends on plan, region, and workload.
+                        </p>
+                    </FadeUp>
                 </div>
 
                 {/* Testimonial grid */}
-                <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
-                    {testimonials.map((t, i) => (
-                        <div
+                <StaggerGroup className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
+                    {testimonials.map((t) => (
+                        <StaggerItem
                             key={t.name}
-                            className={`break-inside-avoid glass-card p-6 ${visible ? `reveal ${delayClasses[i]}` : "opacity-0"
-                                }`}
+                            className="break-inside-avoid glass-card p-6"
                         >
                             {/* Stars */}
                             <div className="flex gap-1 mb-4">
@@ -138,9 +120,9 @@ export default function TestimonialsSection() {
                                     <p className="text-xs text-[#666666]">{t.role}</p>
                                 </div>
                             </div>
-                        </div>
+                        </StaggerItem>
                     ))}
-                </div>
+                </StaggerGroup>
             </div>
         </section>
     );
